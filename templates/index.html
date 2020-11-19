@@ -1,30 +1,29 @@
 {% extends "base.html" %}
 
-{% block title %}
-    Index
-{% endblock title %}
+{% block title %}Index{% endblock title %}
 
 {% block content %}
-    <h1>CSC 210 - Group 3 - URHeard</h1> <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
+	<header class="page-header">
+		<h1>CSC 210 - Group 3 - URHeard</h1> <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
+	</header>
 
-    <h2>Group Members</h2>
-    
-    <ul>
-        <li>Nate Webber</li>
-        <li>Michael Bashner</li>
-        <li>Zeke Brecher</li>
-    </ul>
+	<h2>Group Members</h2>
+	
+	<ul>
+		<li>Nate Webber</li>
+		<li>Michael Bashner</li>
+		<li>Zeke Brecher</li>
+	</ul>
 
-    <section class="container">
-    	{% for petition in petitions %}
-			<section class="panel panel-default">
-				<header class="panel-heading">
-					<h2 class="panel-title">{{petition.title}} <small>{{petition.author.name}}</small></h2>
-				</header>
-				<div class="panel-body">
-					<p>{{petition.body}}</p>
-				</div>
-			</section>
-    	{% endfor %}
-    </section>
+	<div class="d-flex flex-wrap">
+	{% for petition in petitions %}
+		<article class="card m-2">
+			<div class="card-body">
+				<h3 class="card-title">{{petition.title}}</h3>
+				<h4 class="card-subtitle mb-2 text-muted"> by <span class="card-link">{{petition.author.name}}</span></h4>
+				<p class="card-text text-truncate">{{petition.body}}</p>
+			</div>
+		</article>
+	{% endfor %}
+</div>
 {% endblock content %}
