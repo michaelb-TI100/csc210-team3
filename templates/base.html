@@ -1,14 +1,29 @@
-{% extends "bootstrap/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% block head %}
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+		<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+		{% block styles %}
+			<!-- Bootstrap CSS -->
+			{{ bootstrap.load_css() }}
+		{% endblock %}
 
-{% block title %}BASE_TITLE{% endblock %}<!--This is (or should be) overridden on whatever acutal template is rendered-->
+		<title>{% block title %}Your page title{% endblock title %}</title>
+		{% endblock %}
+	</head>
+	<body>
+		<!-- Your page content -->
+		<div class="container">
+		{% block content %}{% endblock %}
+	</div>
 
-{% block head %}
-{{ super() }}
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-{% endblock %}
-
-
-{% block content %}
-{% endblock %}
-
+		{% block scripts %}
+			<!-- Optional JavaScript -->
+			{{ bootstrap.load_js() }}
+		{% endblock %}
+	</body>
+</html>
