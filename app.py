@@ -1,7 +1,11 @@
 import os
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired, Email
 from models import *
+from forms import *
 
 app = Flask(__name__)
 application = app
@@ -31,3 +35,25 @@ def internal_server_error(e):
 def index():
 	petitions = Petition.query.all()
 	return render_template('index.html', petitions=petitions)
+
+#this is all a bit ugly at the moment, will clean it up when I actually make it do stuff
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+	form = loginForm()
+	email = None
+	password = None
+	if form.validate_on_submit():
+		email = form.email.data
+		password = form.password.data
+	#all this does is shows that the data was received correctly
+	return render_template('login.html', form=form, email=email, password=password)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+	form = registerForm()
+	email = None
+	password = None
+	if form.validate_on_submit():
+		email = form.email.data
+		password = form.password.data
+	return render_template('register.html', form=form, email=email, password=password)
