@@ -14,4 +14,17 @@
         <li>Michael Bashner</li>
         <li>Zeke Brecher</li>
     </ul>
+
+    <section class="container">
+    	{% for petition in petitions %}
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<h2 class="panel-title">{{petition.title}} <small>{{petition.author.name}}</small></h2>
+				</header>
+				<div class="panel-body">
+					<p>{{petition.body}}</p>
+				</div>
+			</section>
+    	{% endfor %}
+    </section>
 {% endblock content %}
