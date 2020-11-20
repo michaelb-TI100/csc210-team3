@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+	<header class="page-header">
+		<h1>Login</h1>
+	</header>
+
+	{{ wtf.quick_form(form) }}
+	<br>
+
+	{% if email and password %}
+		<h4>Attemped login with: </h4>
+		<h5>Email: {{ email }}</h5>
+		<h5>Password: {{ password }}</h5>
+	{% endif %}
+
+	<!--<a href=class="btn btn-danger btn-sm">Return</a>-->
+
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock title %}
+
+{% block content %}
+	<header class="page-header">
+		<h1>Register an Account</h1>
+	</header>
+
+	{{ wtf.quick_form(form) }}
+	<br>
+
+	{% if email and password %}
+		<h4>Attemped to register an account with: </h4>
+		<h5>Email: {{ email }}</h5>
+		<h5>Password: {{ password }}</h5>
+	{% endif %}
+
+	<!--<a href=class="btn btn-danger btn-sm">Return</a>-->
+
+{% endblock content %}
