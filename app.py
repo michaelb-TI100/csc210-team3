@@ -20,19 +20,22 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
-#TODO neither of these error handling pages seems to render quite right at the moment
+
 @app.errorhandler(404)
 def page_not_found(e):
 	return render_template('404.html'), 404
+
 
 @app.errorhandler(500)
 def internal_server_error(e):
 	return render_template('500.html'), 500
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	petitions = Petition.query.all()
 	return render_template('index.html', petitions=petitions)
+
 
 #this is all a bit ugly at the moment, will clean it up when I actually make it do stuff
 @app.route('/login', methods=['GET', 'POST'])
@@ -46,6 +49,7 @@ def login():
 		password = form.password.data
 	#all this does is shows that the data was received correctly
 	return render_template('login.html', form=form, email=email, password=password)
+
 
 #at the moment register and login are practically the same
 @app.route('/register', methods=['GET', 'POST'])
@@ -79,4 +83,3 @@ def create():
 		except:
 			return 'There was an error adding your new petition!'
 	return render_template('create.html', form=form)
-
