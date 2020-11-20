@@ -33,7 +33,7 @@ def internal_server_error(e):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-	petitions = Petition.query.all()
+	petitions = Petition.query.order_by(Petition.timestamp.desc()).all()
 	return render_template('index.html', petitions=petitions)
 
 
