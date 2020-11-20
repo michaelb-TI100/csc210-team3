@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Create Petition{% endblock title %}
+
+{% block content %}
+	<header class="page-header">
+		<h1>Submit a new petition</h1>
+	</header>
+
+	{{ wtf.quick_form(form) }}
+	<br>
+
+	<!--<a href=class="btn btn-danger btn-sm">Return</a>-->
+
+{% endblock content %}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email
 
 #document defines the various forms we will use 
@@ -14,4 +14,10 @@ class loginForm(FlaskForm):
 class registerForm(FlaskForm):
     email = StringField('Email Address', validators=[DataRequired()]) #still no email validator yet
     password = StringField('Password', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+#form for submitting new petitions
+class petitionForm(FlaskForm):
+    title = StringField('Petition Title (Limit 80 Characters)', validators=[DataRequired()])
+    body = TextAreaField('Body text', validators=[DataRequired()])
     submit = SubmitField('Submit')

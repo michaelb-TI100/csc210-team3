@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -57,3 +57,21 @@ def register():
 		email = form.email.data
 		password = form.password.data
 	return render_template('register.html', form=form, email=email, password=password)
+
+@app.route('/create', methods=['GET', 'POST'])
+def create():
+	form = petitionForm()
+	if form.validate_on_submit():
+		new_title = form.title.data
+		new_body = form.body.data
+		#for now, the 'test' user owns all new petitions
+		new_author_id = 1
+		new_petition = Petition(title = new_title, body = new_body, author_id = new_author_id)
+		try:
+			db.session.add(new_petition)
+			db.session.commit()
+			return redirect(url_for('index'))
+		except:
+			return 'There was an error adding your new petition!'
+	return render_template('create.html', form=form)
+
