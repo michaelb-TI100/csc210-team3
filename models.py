@@ -1,5 +1,6 @@
 # import os
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 # basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -32,6 +33,8 @@ class Petition(db.Model):
 	author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 	author = db.relationship('User', backref='petition')
 
+	timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
 	def __repr__(self):
 		return '<Petition %r>' % self.title
 
@@ -46,6 +49,8 @@ class Comment(db.Model):
 
 	petition_id = db.Column(db.Integer, db.ForeignKey('petition.id'), nullable=False)
 	petition = db.relationship('Petition', backref=db.backref('comment', lazy=True))
+
+	timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 	def __repr__(self):
 		return '<Comment %r>' % self.title
