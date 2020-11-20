@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{% import "bootstrap/wtf.html" as wtf %}
+		{% import "bootstrap/form.html" as wtf %}
 		{% block head %}
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
@@ -26,9 +26,9 @@
     				<li class="nav-item">
       					<a class="nav-link" href={{ url_for ('create') }}> Create Petition </a>
     				</li>
-    				<li class="nav-item">
+    				{# <li class="nav-item">
       					<a class="nav-link" href={{ url_for ('petition') }}> Generic Petiton </a>
-    				</li>
+    				</li> #}
     				<li class="nav-item">
       					<a class="nav-link" href={{ url_for ('login') }}> Login </a>
     				</li>
