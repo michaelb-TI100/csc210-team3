@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, Email
 from wtforms.fields.html5 import EmailField
 
@@ -9,7 +9,8 @@ from wtforms.fields.html5 import EmailField
 class loginForm(FlaskForm):
     email = EmailField('Email Address', validators=[DataRequired()])
     password = StringField('Password', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    remember_me = BooleanField('Keep me logged in')
+    submit = SubmitField('Log In')
 
 
 #TODO current plan is to make sure submitted emails are from rochester.edu domain. so, uh, do that
