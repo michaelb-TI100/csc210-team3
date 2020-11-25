@@ -4,12 +4,18 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
+from flask_login import LoginManager, login_required
 from models import *
 from forms import *
 
 app = Flask(__name__)
 application = app
 bootstrap = Bootstrap(app)
+
+#login manager setup
+login_manager = LoginManager()
+login_manager.login_view = 'login' #default redirect when someone who isn't logged in tries to access a page that requires login
+login_manager.init_app(app)
 
 # SQLAlchemy and Database setup code
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -83,3 +89,13 @@ def create():
 		except:
 			return 'There was an error adding your new petition!'
 	return render_template('create.html', form=form)
+
+
+@app.route('/secret', methods=['GET', 'POST'])
+@login_required
+def secret():
+	return 'Only authenticated users are allowed!'
+
+@login_manager.user_loader
+def load_user(user_id):
+	return User.query.get(int(user_id))

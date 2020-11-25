@@ -7,7 +7,7 @@ from wtforms.fields.html5 import EmailField
 
 #I think it may be easier to just use emails instead of custom usernames. 
 class loginForm(FlaskForm):
-    email = EmailField('Email Address', validators=[DataRequired()]) #no email validator yet, because I have to figure out csrf stuff
+    email = EmailField('Email Address', validators=[DataRequired()])
     password = StringField('Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
