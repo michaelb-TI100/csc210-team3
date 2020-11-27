@@ -91,3 +91,8 @@ def create():
 def petition(id):
 	petition = Petition.query.get_or_404(id)
 	return render_template('petition.html', petition=petition)
+
+
+@app.route('/about')
+def about():
+	return render_template('about.html')

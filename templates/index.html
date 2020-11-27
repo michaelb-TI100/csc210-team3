@@ -3,17 +3,9 @@
 {% block title %}Index{% endblock title %}
 
 {% block content %}
-	<header class="page-header">
-		<h1>CSC 210 - Group 3 - URHeard</h1> <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
-	</header>
-
-	<h2>Group Members</h2>
-	
-	<ul>
-		<li>Nate Webber</li>
-		<li>Michael Bashner</li>
-		<li>Zeke Brecher</li>
-	</ul>
+<header class="page-header">
+	<h1 class="text-center">CSC 210 - Group 3 - URHeard</h1> <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
+</header>
 <div class="container">
 	<div class="d-flex flex-wrap justify-content-center">
 	{% for petition in petitions %}
