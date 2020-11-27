@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
@@ -9,6 +10,7 @@ from forms import *
 
 app = Flask(__name__)
 application = app
+moment = Moment(app)
 bootstrap = Bootstrap(app)
 
 # SQLAlchemy and Database setup code

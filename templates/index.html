@@ -20,7 +20,7 @@
 		<article class="card m-2">
 			<div class="card-body">
 				<h3 class="card-title">{{petition.title}}</h3>
-				<h4 class="card-subtitle mb-2"><span class="text-muted">{{petition.timestamp}} by</span> <span class="card-link">{{petition.author.name}}</span></h4>
+				<h4 class="card-subtitle mb-2"><span class="text-muted">{{ moment(petition.timestamp).fromNow() }} by</span> <span class="card-link">{{petition.author.name}}</span></h4>
 				<p class="card-text text-truncate">{{petition.body}}</p>
 			</div>
 		</article>
