@@ -14,16 +14,19 @@
 		<li>Michael Bashner</li>
 		<li>Zeke Brecher</li>
 	</ul>
-
-	<div class="d-flex flex-wrap">
+<div class="container">
+	<div class="d-flex flex-wrap justify-content-center">
 	{% for petition in petitions %}
-		<article class="card m-2">
+		<article class="card m-2 w-75">
+		<a href="/petition/{{petition.id}}" class="text-body text-decoration-none">
 			<div class="card-body">
-				<h3 class="card-title">{{petition.title}}</h3>
-				<h4 class="card-subtitle mb-2"><span class="text-muted">{{ moment(petition.timestamp).fromNow() }} by</span> <span class="card-link">{{petition.author.name}}</span></h4>
-				<p class="card-text text-truncate">{{petition.body}}</p>
+				<h3 class="card-title font-weight-bold">{{petition.title}}</h3>
+				<h4 class="card-subtitle mb-2"> <object><a href="user/{{petition.author_id}}">{{petition.author.name}}</a></object> &middot; {{ moment(petition.timestamp).fromNow() }}</h4>
+				<p class="card-text">{{petition.body | truncate(325, false, end='... Read More', leeway=10) }}</p>
 			</div>
+		</a>
 		</article>
 	{% endfor %}
+</div>
 </div>
 {% endblock content %}
