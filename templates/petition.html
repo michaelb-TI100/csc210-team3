@@ -3,11 +3,13 @@
 {# {% block title %} Petition Title {% endblock title %} #}
 
 {% block content %}
-	<div class="card-body">
-		<h3 class="card-title font-weight-bold">{{petition.title}}</h3>
-		<h4 class="card-subtitle mb-2"> <a href="user/{{petition.author_id}}">{{petition.author.name}}</a> &middot; {{ moment(petition.timestamp).fromNow() }}</h4>
-		<p class="card-text" style="white-space: pre-wrap;">{{petition.body}}</p>
-	</div>
+	<article class="container">
+		<heading>
+			<h3 class="title">{{petition.title}}</h3>
+			<h4><a href="user/{{petition.author_id}}">{{petition.author.name}}</a> &middot; {{ moment(petition.timestamp).fromNow() }}</h4>
+		</heading>
+		<p style="white-space: pre-wrap;">{{petition.body}}</p>
+	</article>
 	{# <div class="d-flex flex-wrap">
 		<article class="card m-2">
 			<div class="card-body">
