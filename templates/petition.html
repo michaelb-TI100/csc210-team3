@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %} Petition Title {% endblock title %}
+{# {% block title %} Petition Title {% endblock title %} #}
 
 {% block content %}
-	<div class="d-flex flex-wrap">
+	<div class="card-body">
+		<h3 class="card-title font-weight-bold">{{petition.title}}</h3>
+		<h4 class="card-subtitle mb-2"> <a href="user/{{petition.author_id}}">{{petition.author.name}}</a> &middot; {{ moment(petition.timestamp).fromNow() }}</h4>
+		<p class="card-text" style="white-space: pre-wrap;">{{petition.body}}</p>
+	</div>
+	{# <div class="d-flex flex-wrap">
 		<article class="card m-2">
 			<div class="card-body">
 				<h3 class="card-title"> petiton title </h3>
@@ -11,5 +16,5 @@
 				<p class="card-text text-truncate"> contents of petiton </p>
 			</div>
 		</article>
-	</div>
+	</div> #}
 {% endblock content %}
