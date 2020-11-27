@@ -85,3 +85,9 @@ def create():
 		except:
 			return 'There was an error adding your new petition!'
 	return render_template('create.html', form=form)
+
+
+@app.route('/petition/<int:id>', methods=['GET', 'POST'])
+def petition(id):
+	petition = Petition.query.get_or_404(id)
+	return render_template('petition.html', petition=petition)
