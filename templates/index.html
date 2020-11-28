@@ -7,7 +7,7 @@
 	<div class="d-flex flex-wrap justify-content-center">
 	{% for petition in petitions %}
 		<article class="card m-2 w-75">
-		<a href="/petition/{{petition.id}}" class="text-body text-decoration-none">
+		<a href={{ url_for ('petition', id=petition.id) }} class="text-body text-decoration-none">
 			<div class="card-body">
 				<h3 class="card-title font-weight-bold">{{petition.title}}</h3>
 				<h4 class="card-subtitle mb-2"> <object><a href="user/{{petition.author_id}}">{{petition.author.name}}</a></object> &middot; {{ moment(petition.timestamp).fromNow() }}</h4>

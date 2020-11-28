@@ -4,11 +4,29 @@
 
 {% block content %}
 	<article class="container">
-		<heading>
-			<h3 class="title">{{petition.title}}</h3>
-			<h4><a href="user/{{petition.author_id}}">{{petition.author.name}}</a> &middot; {{ moment(petition.timestamp).fromNow() }}</h4>
-		</heading>
-		<p style="white-space: pre-wrap;">{{petition.body}}</p>
+		<div class="row py-3">
+			<div class="col-3 order-2" id="side-panel">
+				<div class="sticky-top">
+					<div class="card bg-light mb-3" style="max-width: 18rem;">
+						<div class="card-header"> Generic Side Panel </div>
+						<div class="card-body">
+							<p> (add a cool progress bar or something)</p>
+							<a href="#" class="btn btn-primary"> Sign This Petition! </a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col" id="main">
+				<div class="card bg-light mb3" style="max-width: 100rem;">
+					<heading>
+						<h3 class="card-header"> {{petition.title}} <a href="user/{{petition.author_id}}">{{petition.author.name}}</a> &middot; {{ moment(petition.timestamp).fromNow() }}</h3>
+					</heading>
+					<div class="card-body">
+						<p style="white-space: pre-wrap;">{{petition.body}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
 	</article>
 	{# <div class="d-flex flex-wrap">
 		<article class="card m-2">
