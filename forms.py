@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, Email
 from wtforms.fields.html5 import EmailField
 
@@ -7,9 +7,10 @@ from wtforms.fields.html5 import EmailField
 
 #I think it may be easier to just use emails instead of custom usernames. 
 class loginForm(FlaskForm):
-    email = EmailField('Email Address', validators=[DataRequired()]) #no email validator yet, because I have to figure out csrf stuff
+    email = EmailField('Email Address', validators=[DataRequired()])
     password = StringField('Password', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    remember_me = BooleanField('Keep me logged in')
+    submit = SubmitField('Log In')
 
 
 #TODO current plan is to make sure submitted emails are from rochester.edu domain. so, uh, do that

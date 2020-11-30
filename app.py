@@ -1,10 +1,11 @@
 import os
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
+from flask_login import LoginManager, login_required, login_user, logout_user
 from models import *
 from forms import *
 
@@ -12,6 +13,11 @@ app = Flask(__name__)
 application = app
 moment = Moment(app)
 bootstrap = Bootstrap(app)
+
+#login manager setup
+login_manager = LoginManager()
+login_manager.login_view = 'login' #default redirect when someone who isn't logged in tries to access a page that requires login
+login_manager.init_app(app)
 
 # SQLAlchemy and Database setup code
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -38,22 +44,33 @@ def index():
 	petitions = Petition.query.order_by(Petition.timestamp.desc()).all()
 	return render_template('index.html', petitions=petitions)
 
-
-#this is all a bit ugly at the moment, will clean it up when I actually make it do stuff
+#this is pretty heavily based on the implementation in the textbook
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	form = loginForm()
-	#particularly these two lines shouldn't be necessary once the app functions, but for now its to demonstrate the data is being handled correctly
-	email = None
-	password = None
 	if form.validate_on_submit():
-		email = form.email.data
-		password = form.password.data
-	#all this does is shows that the data was received correctly
-	return render_template('login.html', form=form, email=email, password=password)
+		user = User.query.filter_by(email=form.email.data).first()
+		#if user exists and the password is correct
+		if user is not None and user.verify_password(form.password.data):
+			login_user(user, form.remember_me.data) #if the second argument is true, user will be remembered
+			next = request.args.get('next')
+			if next is None or not next.startswith('/'):
+				next = url_for('index')
+			return redirect(next)
+		flash('Invalid username or password.')
+	return render_template('login.html', form=form)
+
+#tiny little route for logging out
+@app.route('/logout')
+@login_required
+def logout():
+	logout_user()
+	flash('You have been successfully logged out.')
+	return redirect(url_for('index'))
 
 
-#at the moment register and login are practically the same
+
+#TODO this doesn't work yet
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 	form = registerForm()
@@ -73,7 +90,7 @@ def create():
 		#grab data from the form
 		new_title = form.title.data
 		new_body = form.body.data
-		#for now, the 'test' user, whose id is 1, owns all new petitions
+		#for now, the 'test' user (Mr. James Tester), whose id is 1, owns all new petitions
 		#in the future, we'll instead grab the author based on the current login session
 		new_author_id = 1
 		new_petition = Petition(title = new_title, body = new_body, author_id = new_author_id)
@@ -87,6 +104,18 @@ def create():
 	return render_template('create.html', form=form)
 
 
+#this page is just for testing if login can be effectively verified
+#it should be deleted later
+@app.route('/secret', methods=['GET', 'POST'])
+@login_required
+def secret():
+	return "Only authenticated users are allowed, and you're in!"
+
+@login_manager.user_loader
+def load_user(user_id):
+	return User.query.get(int(user_id))
+
+
 @app.route('/petition/<int:id>', methods=['GET', 'POST'])
 def petition(id):
 	petition = Petition.query.get_or_404(id)
@@ -96,3 +125,4 @@ def petition(id):
 @app.route('/about')
 def about():
 	return render_template('about.html')
+

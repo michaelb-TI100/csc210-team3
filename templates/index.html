@@ -3,8 +3,21 @@
 {% block title %} UR Heard {% endblock title %}
 
 {% block content %}
+
+	<h3>Hello,
+		{% if current_user.is_authenticated %}
+			{{ current_user.name }}
+		{% else %}
+			Stranger
+		{% endif %}
+	</h3>
+
+
+	<div class="d-flex flex-wrap">
+
 <div class="container">
 	<div class="d-flex flex-wrap justify-content-center">
+
 	{% for petition in petitions %}
 		<article class="card m-2 w-75">
 		<a href={{ url_for ('petition', id=petition.id) }} class="text-body text-decoration-none">

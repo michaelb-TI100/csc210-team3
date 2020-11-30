@@ -1,7 +1,8 @@
 # import os
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 # basedir = os.path.abspath(os.path.dirname(__file__))
 
 # app.config['SECRET_KEY'] = 'hard to guess string'
@@ -12,10 +13,26 @@ from datetime import datetime
 db = SQLAlchemy()
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
 	__tablename__ = 'user'
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(50), nullable=False)
+	name = db.Column(db.String(50), nullable=False, unique=True, index=True)
+	email = db.Column(db.String(50), unique=True, index=True)
+
+	#password/security stuff
+	password_hash = db.Column(db.String(128))
+
+	@property
+	def password(self):
+		raise AttributeError('password is not a readable attribute')
+
+	@password.setter
+	def password(self, password):
+		self.password_hash = generate_password_hash(password)
+	
+	def verify_password(self, password):
+		return check_password_hash(self.password_hash, password)
+	#end of password/security stuff
 
 	petitions = db.relationship('Petition', backref='user')
 
@@ -56,7 +73,7 @@ class Comment(db.Model):
 		return '<Comment %r>' % self.title
 
 
-signature = db.Table('signature',
+	signature = db.Table('signature',
 	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
 	db.Column('petition_id', db.Integer, db.ForeignKey('petition.id'))
 )
