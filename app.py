@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
@@ -10,6 +11,7 @@ from forms import *
 
 app = Flask(__name__)
 application = app
+moment = Moment(app)
 bootstrap = Bootstrap(app)
 
 #login manager setup
@@ -101,6 +103,7 @@ def create():
 			return 'There was an error adding your new petition!'
 	return render_template('create.html', form=form)
 
+
 #this page is just for testing if login can be effectively verified
 #it should be deleted later
 @app.route('/secret', methods=['GET', 'POST'])
@@ -111,3 +114,15 @@ def secret():
 @login_manager.user_loader
 def load_user(user_id):
 	return User.query.get(int(user_id))
+
+
+@app.route('/petition/<int:id>', methods=['GET', 'POST'])
+def petition(id):
+	petition = Petition.query.get_or_404(id)
+	return render_template('petition.html', petition=petition)
+
+
+@app.route('/about')
+def about():
+	return render_template('about.html')
+

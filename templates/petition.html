@@ -1,9 +1,34 @@
 {% extends "base.html" %}
 
-{% block title %} Petition Title {% endblock title %}
-
+{% block title %} UR Heard - {{petition.title}} {% endblock title %}
+<!-- could also just be "UR Heard - View Petition" -->
 {% block content %}
-	<div class="d-flex flex-wrap">
+	<article class="container">
+		<div class="row py-3">
+			<div class="col-3 order-2" id="side-panel">
+				<div class="sticky-top">
+					<div class="card bg-light mb-3" style="max-width: 18rem;">
+						<div class="card-header"> Generic Side Panel </div>
+						<div class="card-body">
+							<p> (add a cool progress bar or something)</p>
+							<a href="#" class="btn btn-primary"> Sign This Petition! </a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col" id="main">
+				<div class="card bg-light mb3" style="max-width: 100rem;">
+					<heading>
+						<h3 class="card-header"> {{petition.title}} <a href="user/{{petition.author_id}}">{{petition.author.name}}</a> &middot; {{ moment(petition.timestamp).fromNow() }}</h3>
+					</heading>
+					<div class="card-body">
+						<p style="white-space: pre-wrap;">{{petition.body}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+	{# <div class="d-flex flex-wrap">
 		<article class="card m-2">
 			<div class="card-body">
 				<h3 class="card-title"> petiton title </h3>
@@ -11,5 +36,5 @@
 				<p class="card-text text-truncate"> contents of petiton </p>
 			</div>
 		</article>
-	</div>
+	</div> #}
 {% endblock content %}
