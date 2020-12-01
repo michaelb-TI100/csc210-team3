@@ -29,7 +29,7 @@
 		<nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-center sticky-top">
 
 			<ul class="navbar-nav">
-				<li class="nav-item active">
+				<li class="nav-item">
 					<a class="nav-link" href={{ url_for ('index') }}>Home</a>
 				</li>
 				<li class="nav-item">
@@ -67,6 +67,28 @@
 			<!-- Optional JavaScript -->
 			{{ bootstrap.load_js() }}
 			{{ moment.include_moment() }}
+			<script>
+				$(document).ready(function() {
+					function currentFile() {
+						currentURL = window.location.href;
+						fileNameIndex = currentURL.lastIndexOf("/") + 1;
+						currentFileName = currentURL.substr(fileNameIndex);
+						currentFileName = currentFileName.split('#')[0];
+						return currentFileName;
+					}
+
+					var thisFile = currentFile();
+					if ( thisFile == "" ) {
+						thisFile = "/"
+					}
+
+					$("ul li a").each( function() {
+						if (this.href.indexOf(thisFile) > 0) {
+							$(this).parent().addClass("active");
+						}
+					});
+				});
+			</script>
 		{% endblock %}
 	</body>
 </html>
