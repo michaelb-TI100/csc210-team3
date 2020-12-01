@@ -49,15 +49,19 @@ def index():
 def login():
 	form = loginForm()
 	if form.validate_on_submit():
+		print('Login form submitted!')
 		user = User.query.filter_by(email=form.email.data).first()
+		print(user.name)
 		#if user exists and the password is correct
 		if user is not None and user.verify_password(form.password.data):
+			print('Login form validated successfully!')
 			login_user(user, form.remember_me.data) #if the second argument is true, user will be remembered
 			next = request.args.get('next')
 			if next is None or not next.startswith('/'):
 				next = url_for('index')
 			return redirect(next)
 		flash('Invalid username or password.')
+	print('Login form not received!')
 	return render_template('login.html', form=form)
 
 #tiny little route for logging out
