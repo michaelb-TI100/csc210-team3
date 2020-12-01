@@ -13,9 +13,9 @@ class loginForm(FlaskForm):
     submit = SubmitField('Log In')
 
 
-#TODO current plan is to make sure submitted emails are from rochester.edu domain. so, uh, do that
+#emails will be verified as coming from the rochester.edu domain in app.py
 class registerForm(FlaskForm):
-    email = EmailField('Email Address', validators=[DataRequired()]) #still no email validator yet
+    email = EmailField('Email Address', validators=[DataRequired()])
     password = StringField('Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
 

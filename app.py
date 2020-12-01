@@ -28,16 +28,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
-
 @app.errorhandler(404)
 def page_not_found(e):
 	return render_template('404.html'), 404
 
-
 @app.errorhandler(500)
 def internal_server_error(e):
 	return render_template('500.html'), 500
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -45,22 +42,28 @@ def index():
 	return render_template('index.html', petitions=petitions)
 
 #this is pretty heavily based on the implementation in the textbook
+#there are a few debug print statements that could be cleaned up later
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	form = loginForm()
 	if form.validate_on_submit():
+		#debug
 		print('Login form submitted!')
 		user = User.query.filter_by(email=form.email.data).first()
+		#debug
 		print(user.name)
 		#if user exists and the password is correct
 		if user is not None and user.verify_password(form.password.data):
+			#debug
 			print('Login form validated successfully!')
 			login_user(user, form.remember_me.data) #if the second argument is true, user will be remembered
 			next = request.args.get('next')
 			if next is None or not next.startswith('/'):
 				next = url_for('index')
 			return redirect(next)
+		#TODO flashing messages doesn't work quite right and I'm not sure why
 		flash('Invalid username or password.')
+	#debug
 	print('Login form not received!')
 	return render_template('login.html', form=form)
 
@@ -85,9 +88,9 @@ def register():
 		password = form.password.data
 	return render_template('register.html', form=form, email=email, password=password)
 
-
-#TODO eventually this will have to be modified so that you can't access this URL if you aren't currently logged in
+#create and submit a petition. requires the user to be logged in
 @app.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
 	form = petitionForm()
 	if form.validate_on_submit():
@@ -107,7 +110,6 @@ def create():
 			return 'There was an error adding your new petition!'
 	return render_template('create.html', form=form)
 
-
 #this page is just for testing if login can be effectively verified
 #it should be deleted later
 @app.route('/secret', methods=['GET', 'POST'])
@@ -115,18 +117,18 @@ def create():
 def secret():
 	return "Only authenticated users are allowed, and you're in!"
 
-@login_manager.user_loader
-def load_user(user_id):
-	return User.query.get(int(user_id))
-
-
+#dynamically generated page for a given petition
 @app.route('/petition/<int:id>', methods=['GET', 'POST'])
 def petition(id):
 	petition = Petition.query.get_or_404(id)
 	return render_template('petition.html', petition=petition)
 
-
+#about page
 @app.route('/about')
 def about():
 	return render_template('about.html')
 
+#user loader utility for the login manager
+@login_manager.user_loader
+def load_user(user_id):
+	return User.query.get(int(user_id))

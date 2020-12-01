@@ -16,6 +16,7 @@ db = SQLAlchemy()
 class User(UserMixin, db.Model):
 	__tablename__ = 'user'
 	id = db.Column(db.Integer, primary_key=True)
+	#users actually log in with their email, so name isn't terribly important. eventually names will be automatically assigned by clipping the email address when the user registers an account
 	name = db.Column(db.String(50), nullable=False, unique=True, index=True)
 	email = db.Column(db.String(50), unique=True, index=True)
 
