@@ -1,94 +1,56 @@
+{% from 'bootstrap/nav.html' import render_nav_item %}
+{% import "bootstrap/form.html" as wtf %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{% import "bootstrap/form.html" as wtf %}
 		{% block head %}
-		<!-- Required meta tags -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-		<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-
-		{% block styles %}
-			<!-- Bootstrap CSS -->
-			{{ bootstrap.load_css() }}
-		{% endblock %}
-
-		<title>{% block title %} UR Heard {% endblock title %}</title>
-		{% endblock %}
+			<!-- Required meta tags -->
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+			{# <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon"> #}
+			{# <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon"> #}
+			{% block styles %}
+				<!-- Bootstrap CSS -->
+				{{ bootstrap.load_css() }}
+				<style>
+					body {
+						background-image: url({{ url_for('static', filename='images/background.png') }});
+						background-size: 300px 300px;
+						background-repeat: repeat;
+					}
+				</style>
+			{% endblock styles %}
+			<title>{% block title %}UR Heard{% endblock title %}</title>
+		{% endblock head %}
 	</head>
-	<style>
-	body {
-		background-image: url({{ url_for('static', filename='images/background.png')}});
-	 	background-size: 300px 300px;
-		background-repeat: yes-repeat;
-	}
-	</style>
 	<body>
 		<!-- Your page content -->
 		<nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-center sticky-top">
-
 			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link" href={{ url_for ('index') }}>Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href={{ url_for ('create') }}>Create Petition</a>
-				</li>
-				{# <li class="nav-item">
-					<a class="nav-link" href={{ url_for ('petition') }}> Generic Petiton </a>
-				</li> #}
-  <!--If the user is logged in, show the logout button. Otherwise, show the login and register buttons-->
-					{% if current_user.is_authenticated %}
-					<li class="nav-item">
-						<a class="nav-link" href={{ url_for ('logout') }}> Logout </a>
-				  	</li>
-					{% else %}
-					<li class="nav-item">
-						<a class="nav-link" href={{ url_for ('login') }}> Login </a>
-				  	</li>
-				  	<li class="nav-item">
-						<a class="nav-link" href={{ url_for ('register') }}> Register </a>
-				  	</li>
-					{% endif %}
-				<li class="nav-item">
-					<a class="nav-link" href={{ url_for ('about') }}>About</a>
-				</li>
+				{{ render_nav_item('index', 'Home', use_li=True) }}
+				{{ render_nav_item('create', 'Create Petition', use_li=True) }}
+				{{ render_nav_item('about', 'About', use_li=True) }}
+			</ul>
+			<ul class="navbar-nav bg-warning">
+				<!--If the user is logged in, show the logout button. Otherwise, show the login and register buttons-->
+				{% if current_user.is_authenticated %}
+					{{ render_nav_item('logout', 'Logout', use_li=True) }}
+				{% else %}
+					{{ render_nav_item('login', 'Login', use_li=True) }}
+					{{ render_nav_item('register', 'Register', use_li=True) }}
+				{% endif %}
 			</ul>
 		</nav>
 		<div class="container">
-		<header class="page-header">
-			<h1 class="text-center" >CSC 210 - Group 3 - URHeard</h1> <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
-		</header>
-		{% block content %}{% endblock %}
-	</div>
-
+			<header class="page-header">
+				<h1 class="text-center" >CSC 210 - Group 3 - URHeard</h1> <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
+			</header>
+			{% block content %}{% endblock %}
+		</div>
 		{% block scripts %}
 			<!-- Optional JavaScript -->
 			{{ bootstrap.load_js() }}
 			{{ moment.include_moment() }}
-			<script>
-				$(document).ready(function() {
-					function currentFile() {
-						currentURL = window.location.href;
-						fileNameIndex = currentURL.lastIndexOf("/") + 1;
-						currentFileName = currentURL.substr(fileNameIndex);
-						currentFileName = currentFileName.split('#')[0];
-						return currentFileName;
-					}
-
-					var thisFile = currentFile();
-					if ( thisFile == "" ) {
-						thisFile = "/"
-					}
-
-					$("ul li a").each( function() {
-						if (this.href.indexOf(thisFile) > 0) {
-							$(this).parent().addClass("active");
-						}
-					});
-				});
-			</script>
 		{% endblock %}
 	</body>
 </html>
