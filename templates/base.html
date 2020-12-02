@@ -14,9 +14,13 @@
 				{{ bootstrap.load_css() }}
 				<style>
 					body {
-						background-image: url({{ url_for('static', filename='images/background.png') }});
+						background-image: url("{{ url_for('static', filename='images/background.png') }}");
 						background-size: 300px 300px;
 						background-repeat: repeat;
+					}
+
+					.active {
+						font-weight: bold;
 					}
 				</style>
 			{% endblock styles %}
