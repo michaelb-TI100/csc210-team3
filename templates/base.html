@@ -29,25 +29,28 @@
 	</head>
 	<body>
 		<!-- Your page content -->
-		<nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-center sticky-top">
-			<ul class="navbar-nav">
-				{{ render_nav_item('index', 'Home', use_li=True) }}
-				{{ render_nav_item('create', 'Create Petition', use_li=True) }}
-				{{ render_nav_item('about', 'About', use_li=True) }}
-			</ul>
-			<ul class="navbar-nav bg-warning">
-				<!--If the user is logged in, show the logout button. Otherwise, show the login and register buttons-->
-				{% if current_user.is_authenticated %}
-					{{ render_nav_item('logout', 'Logout', use_li=True) }}
-				{% else %}
-					{{ render_nav_item('login', 'Login', use_li=True) }}
-					{{ render_nav_item('register', 'Register', use_li=True) }}
-				{% endif %}
-			</ul>
+		<nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-between sticky-top">
+			<div class="container">
+				<ul class="navbar-nav w-50">
+					{{ render_nav_item('index', 'Home', use_li=True) }}
+					{{ render_nav_item('create', 'Create Petition', use_li=True) }}
+					{{ render_nav_item('about', 'About', use_li=True) }}
+				</ul>
+				<a href="/" class="navbar-brand mx-auto d-block text-center w-25">UR Heard</a>
+				<ul class="navbar-nav justify-content-end w-50">
+					<!--If the user is logged in, show the logout button. Otherwise, show the login and register buttons-->
+					{% if current_user.is_authenticated %}
+						{{ render_nav_item('logout', 'Logout', use_li=True) }}
+					{% else %}
+						{{ render_nav_item('login', 'Login', use_li=True) }}
+						{{ render_nav_item('register', 'Register', use_li=True) }}
+					{% endif %}
+				</ul>
+			</div>
 		</nav>
-		<div class="container">
+		<div class="container bg-light mt-2">
 			<header class="page-header">
-				<h1 class="text-center" >CSC 210 - Group 3 - URHeard</h1> <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
+				<h1 class="text-center">CSC 210 - Group 3 - URHeard</h1> <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
 			</header>
 			{% block content %}{% endblock %}
 		</div>
