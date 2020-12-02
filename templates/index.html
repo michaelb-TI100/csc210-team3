@@ -1,34 +1,26 @@
 {% extends "base.html" %}
-
 {% block title %} UR Heard {% endblock title %}
-
 {% block content %}
-
-	<h3>Hello,
+	<h3 class="bg-light">Hello,
 		{% if current_user.is_authenticated %}
 			{{ current_user.name }}
 		{% else %}
 			Stranger
 		{% endif %}
 	</h3>
-
-
-	<div class="d-flex flex-wrap">
-
-<div class="container">
-	<div class="d-flex flex-wrap justify-content-center">
-
-	{% for petition in petitions %}
-		<article class="card m-2 w-75">
-		<a href={{ url_for ('petition', id=petition.id) }} class="text-body text-decoration-none">
-			<div class="card-body">
-				<h3 class="card-title font-weight-bold">{{petition.title}}</h3>
-				<h4 class="card-subtitle mb-2"> <object><a href="user/{{petition.author_id}}">{{petition.author.name}}</a></object> &middot; {{ moment(petition.timestamp).fromNow() }}</h4>
-				<p class="card-text">{{petition.body | truncate(325, false, end='... Read More', leeway=10) }}</p>
-			</div>
-		</a>
-		</article>
-	{% endfor %}
-</div>
-</div>
+	<div class="container">
+		<div class="d-flex flex-wrap justify-content-center">
+		{% for petition in petitions %}
+			<article class="card m-2 w-75">
+				<a href={{ url_for ('petition', id=petition.id) }} class="text-body text-decoration-none">
+					<div class="card-body">
+						<h3 class="card-title font-weight-bold">{{petition.title}}</h3>
+						<h4 class="card-subtitle mb-2"><object><a href="user/{{petition.author_id}}">{{petition.author.name}}</a></object> &middot; {{ moment(petition.timestamp).fromNow() }}</h4>
+						<p class="card-text">{{petition.body | truncate(325, false, end='... Read More', leeway=10) }}</p>
+					</div>
+				</a>
+			</article>
+		{% endfor %}
+		</div>
+	</div>
 {% endblock content %}
