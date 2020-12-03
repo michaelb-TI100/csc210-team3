@@ -5,7 +5,7 @@ from flask_moment import Moment
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
-from flask_login import LoginManager, login_required, login_user, logout_user
+from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from models import *
 from forms import *
 
@@ -97,9 +97,8 @@ def create():
 		#grab data from the form
 		new_title = form.title.data
 		new_body = form.body.data
-		#for now, the 'test' user (Mr. James Tester), whose id is 1, owns all new petitions
-		#in the future, we'll instead grab the author based on the current login session
-		new_author_id = 1
+		#using current_user like this should never cause a problem, as you can't access the /create route without being logged in/authenticated
+		new_author_id = current_user.id
 		new_petition = Petition(title = new_title, body = new_body, author_id = new_author_id)
 		try:
 			db.session.add(new_petition)
