@@ -14,9 +14,11 @@
 				{{ bootstrap.load_css() }}
 				<style>
 					body {
-						background-image: url("{{ url_for('static', filename='images/background.png') }}");
-						background-size: auto auto;
+						background-image: url("{{ url_for('static', filename='images/background2.png') }}");
+						background-size: 500px 500px;
 						background-repeat: repeat;
+						background-position: center;
+						background-attachment: scroll;
 					}
 					.active {
 						text-shadow: #FC0 1px 0 10px;
