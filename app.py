@@ -7,6 +7,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from models import *
+import models
 from forms import *
 
 app = Flask(__name__)
@@ -28,18 +29,22 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+
 @app.errorhandler(404)
 def page_not_found(e):
 	return render_template('404.html'), 404
+
 
 @app.errorhandler(500)
 def internal_server_error(e):
 	return render_template('500.html'), 500
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	petitions = Petition.query.order_by(Petition.timestamp.desc()).all()
 	return render_template('index.html', petitions=petitions)
+
 
 #this is pretty heavily based on the implementation in the textbook
 #there are a few debug print statements that could be cleaned up later
@@ -67,6 +72,7 @@ def login():
 	print('Login form not received!')
 	return render_template('login.html', form=form)
 
+
 #tiny little route for logging out
 @app.route('/logout')
 @login_required
@@ -74,7 +80,6 @@ def logout():
 	logout_user()
 	flash('You have been successfully logged out.')
 	return redirect(url_for('index'))
-
 
 
 #TODO this doesn't work yet
@@ -87,6 +92,7 @@ def register():
 		email = form.email.data
 		password = form.password.data
 	return render_template('register.html', form=form, email=email, password=password)
+
 
 #create and submit a petition. requires the user to be logged in
 @app.route('/create', methods=['GET', 'POST'])
@@ -109,6 +115,7 @@ def create():
 			return 'There was an error adding your new petition!'
 	return render_template('create.html', form=form)
 
+
 #this page is just for testing if login can be effectively verified
 #it should be deleted later
 @app.route('/secret', methods=['GET', 'POST'])
@@ -116,16 +123,20 @@ def create():
 def secret():
 	return "Only authenticated users are allowed, and you're in!"
 
+
 #dynamically generated page for a given petition
 @app.route('/petition/<int:id>', methods=['GET', 'POST'])
 def petition(id):
 	petition = Petition.query.get_or_404(id)
-	return render_template('petition.html', petition=petition)
+	signature = db.session.query(models.signature).filter_by(petition_id=id).count()
+	return render_template('petition.html', petition=petition, signature=signature)
+
 
 #about page
 @app.route('/about')
 def about():
 	return render_template('about.html')
+
 
 #user loader utility for the login manager
 @login_manager.user_loader
