@@ -10,7 +10,12 @@
 						<div class="card-header">Generic Side Panel</div>
 						<div class="card-body">
 							<p>(add a cool progress bar or something)</p>
-							<a href="#" class="btn btn-primary">Sign This Petition!</a>
+							<p>Count of signatures: {{signature}}</p>
+							{% if current_user.is_authenticated %}
+								<a href="#" class="btn btn-primary">Sign This Petition!</a>
+							{% else %}
+								<a href="/login?next=%2Fpetition%2F{{petition.id}}" class="btn btn-primary">Login to sign this petition!</a>
+							{% endif %}
 						</div>
 					</div>
 				</div>
