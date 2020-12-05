@@ -74,7 +74,7 @@ class Comment(db.Model):
 		return '<Comment %r>' % self.title
 
 
-	signature = db.Table('signature',
+signature = db.Table('signature',
 	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
 	db.Column('petition_id', db.Integer, db.ForeignKey('petition.id'))
-)
+	)
