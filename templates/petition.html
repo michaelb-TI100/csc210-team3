@@ -13,17 +13,13 @@
 							<p>Count of signatures: {{signature|length}}</p>
 							{% if current_user.is_authenticated %}
 							<form method="post">
-								{% if current_user in signature %}
-									{{ form.submit }}
-									{{ wtf.render_form(form) }}
-									<a href="#" class="btn btn-primary">Unsign This Petition!</a>
+								{{ form.csrf_token }}
+								{{ form.user_id(value=current_user.id) }}
+								{{ form.petition_id(value=petition.id) }}
+								{% if signed %}
+									{{ form.submit(value="Unsign This Petition!", class_="btn btn-primary") }}
 								{% else %}
-									{{ form.csrf_token }}
-									{{ form.user_id(value=current_user.id) }}
-									{{ form.petition_id(value=petition.id) }}
 									{{ form.submit(value="Sign This Petition!", class_="btn btn-primary") }}
-									{# {{ wtf.render_form(form) }} #}
-									{# <button type="submit" class="btn btn-primary">Sign This Petition!</button> #}
 								{% endif %}
 							</form>
 							{% else %}
