@@ -128,8 +128,18 @@ def secret():
 @app.route('/petition/<int:id>', methods=['GET', 'POST'])
 def petition(id):
 	petition = Petition.query.get_or_404(id)
-	signature = db.session.query(models.signature).filter_by(petition_id=id).count()
-	return render_template('petition.html', petition=petition, signature=signature)
+	signature = db.session.query(models.signature).filter_by(petition_id=id).all()
+	form = signatureForm()
+
+	if form.validate_on_submit():
+		new_signer=User.query.get_or_404(form.user_id.data)
+		# print(new_signer)
+		petition.signers.append(new_signer)
+		db.session.add(petition)
+		db.session.commit()
+		signature = db.session.query(models.signature).filter_by(petition_id=id).all()
+		# TODO Maybe chagne this because it is possibly slow becau8se duplicating above query
+	return render_template('petition.html', petition=petition, signature=signature, form=form)
 
 
 #about page
