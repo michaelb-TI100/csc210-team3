@@ -13,6 +13,12 @@ from flask_login import UserMixin
 db = SQLAlchemy()
 
 
+signature = db.Table('signature',
+	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+	db.Column('petition_id', db.Integer, db.ForeignKey('petition.id'))
+)
+
+
 class User(UserMixin, db.Model):
 	__tablename__ = 'user'
 	id = db.Column(db.Integer, primary_key=True)
@@ -35,8 +41,7 @@ class User(UserMixin, db.Model):
 		return check_password_hash(self.password_hash, password)
 	#end of password/security stuff
 
-	petitions = db.relationship('Petition', backref='user')
-
+	# petitions = db.relationship('Petition', backref='user')
 
 	def __repr__(self):
 		return '<User %r>' % self.name
@@ -52,6 +57,8 @@ class Petition(db.Model):
 	author = db.relationship('User', backref='petition')
 
 	timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+	signers = db.relationship('User', secondary=signature, backref='signed_petitions')
 
 	def __repr__(self):
 		return '<Petition %r>' % self.title
@@ -72,9 +79,3 @@ class Comment(db.Model):
 
 	def __repr__(self):
 		return '<Comment %r>' % self.title
-
-
-signature = db.Table('signature',
-	db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-	db.Column('petition_id', db.Integer, db.ForeignKey('petition.id'))
-	)
