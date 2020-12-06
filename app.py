@@ -105,8 +105,10 @@ def create():
 		new_body = form.body.data
 		#using current_user like this should never cause a problem, as you can't access the /create route without being logged in/authenticated
 		new_author_id = current_user.id
-		new_petition = Petition(title = new_title, body = new_body, author_id = new_author_id)
+		new_petition = Petition(title=new_title, body=new_body, author_id=new_author_id)
 		try:
+			new_petition.signers.append(User.query.get_or_404(new_author_id))
+			new_petition.signature_count = len(new_petition.signers)
 			db.session.add(new_petition)
 			db.session.commit()
 			return redirect(url_for('index'))
@@ -130,30 +132,35 @@ def petition(id):
 	petition = Petition.query.get_or_404(id)
 	signature = db.session.query(models.signature).filter_by(petition_id=id).all()
 	form = signatureForm()
-	signed = None
+	#Boolean variable if the current user has signed the currently viewed petition
+	signed = False
 
 	if current_user.is_authenticated:
-		signed = Petition.query.join(User.signed_petitions).filter(User.id==current_user.id, Petition.id==id).first()
-
-	if form.validate_on_submit():
-		new_signer=User.query.get_or_404(form.user_id.data)
-		# print(new_signer)
-		if signed != None:
-			petition.signers.remove(new_signer)
+		# Queries if the user has signed this petition and returns true if they have
+		signed = True if Petition.query.join(User.signed_petitions).filter(User.id==current_user.id, Petition.id==id).first() != None else False
+		if form.validate_on_submit():
+			current_signer=User.query.get_or_404(form.user_id.data)
+			try:
+				if signed:
+					petition.signers.remove(current_signer)
+				else:
+					petition.signers.append(current_signer)
+				petition.signature_count = len(petition.signers)
+				print(len(petition.signers))
+				# print(len(petition.signature_count))
+				db.session.add(petition)
+				db.session.commit()
+				return redirect(url_for('petition',id=id))
+			except:
+				flash("An issue occurred with the signature feature.")
+				return redirect(url_for('petition',id=id))
+		if signed:
+			print('Exists')
+			return render_template('petition.html', petition=petition, signature=signature, form=form, signed=True)
 		else:
-			petition.signers.append(new_signer)
-		db.session.add(petition)
-		db.session.commit()
-		# signature = db.session.query(models.signature).filter_by(petition_id=id).all()
-		return redirect(url_for('petition',id=id))
-		# TODO Maybe chagne this because it is possibly slow becau8se duplicating above query
-	# print(signed)
-	if signed != None:
-		print('Exists')
-		return render_template('petition.html', petition=petition, signature=signature, form=form, signed=True)
+			return render_template('petition.html', petition=petition, signature=signature, form=form, signed=False)
 	else:
-		return render_template('petition.html', petition=petition, signature=signature, form=form, signed=False)
-	return render_template('petition.html', petition=petition, signature=signature, form=form)
+		return render_template('petition.html', petition=petition, signature=signature, form=form)
 
 
 #about page
