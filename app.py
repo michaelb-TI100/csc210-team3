@@ -130,15 +130,29 @@ def petition(id):
 	petition = Petition.query.get_or_404(id)
 	signature = db.session.query(models.signature).filter_by(petition_id=id).all()
 	form = signatureForm()
+	signed = None
+
+	if current_user.is_authenticated:
+		signed = Petition.query.join(User.signed_petitions).filter(User.id==current_user.id, Petition.id==id).first()
 
 	if form.validate_on_submit():
 		new_signer=User.query.get_or_404(form.user_id.data)
 		# print(new_signer)
-		petition.signers.append(new_signer)
+		if signed != None:
+			petition.signers.remove(new_signer)
+		else:
+			petition.signers.append(new_signer)
 		db.session.add(petition)
 		db.session.commit()
-		signature = db.session.query(models.signature).filter_by(petition_id=id).all()
+		# signature = db.session.query(models.signature).filter_by(petition_id=id).all()
+		return redirect(url_for('petition',id=id))
 		# TODO Maybe chagne this because it is possibly slow becau8se duplicating above query
+	# print(signed)
+	if signed != None:
+		print('Exists')
+		return render_template('petition.html', petition=petition, signature=signature, form=form, signed=True)
+	else:
+		return render_template('petition.html', petition=petition, signature=signature, form=form, signed=False)
 	return render_template('petition.html', petition=petition, signature=signature, form=form)
 
 
