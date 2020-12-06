@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, BooleanField
+from wtforms import StringField, SubmitField, TextAreaField, BooleanField, HiddenField
 from wtforms.validators import DataRequired, Email
 from wtforms.fields.html5 import EmailField
 
@@ -25,3 +25,9 @@ class petitionForm(FlaskForm):
     title = StringField('Petition Title (Limit 80 Characters)', validators=[DataRequired()])
     body = TextAreaField('Body text', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class signatureForm(FlaskForm):
+	user_id=HiddenField("user_id")
+	petition_id=HiddenField("petition_id")
+	submit = SubmitField('Sign this')
