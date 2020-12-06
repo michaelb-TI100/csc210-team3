@@ -1,13 +1,6 @@
 {% extends "base.html" %}
 {% block title %} UR Heard {% endblock title %}
 {% block content %}
-	<h3 class="bg-light">Hello,
-		{% if current_user.is_authenticated %}
-			{{ current_user.name }}
-		{% else %}
-			Stranger
-		{% endif %}
-	</h3>
 	<div class="container">
 		<div class="d-flex flex-wrap justify-content-center">
 		{% for petition in petitions %}
@@ -23,4 +16,11 @@
 		{% endfor %}
 		</div>
 	</div>
+	<h3 class="bg-light">Hello,
+		{% if current_user.is_authenticated %}
+			{{ current_user.name }}
+		{% else %}
+			Stranger
+		{% endif %}
+	</h3>
 {% endblock content %}
