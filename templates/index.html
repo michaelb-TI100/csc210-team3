@@ -15,7 +15,7 @@
 				<a href="{{ url_for ('petition', id=petition.id) }}" class="text-body text-decoration-none">
 					<div class="card-body">
 						<h3 class="card-title font-weight-bold">{{petition.title}}</h3>
-						<h4 class="card-subtitle mb-2"><object><a href="user/{{petition.author_id}}">{{petition.author.name}}</a></object> &middot; {{ moment(petition.timestamp).fromNow() }}</h4>
+						<h4 class="card-subtitle mb-2"><object><a href="user/{{petition.author_id}}">{{petition.author.name}}</a></object> &middot; {{ moment(petition.timestamp).fromNow() }} &middot; {{ petition.signature_count }} {{'Signature' if petition.signature_count==1 else 'Signatures'}}</h4>
 						<p class="card-text">{{petition.body | truncate(325, false, end='... Read More', leeway=10) }}</p>
 					</div>
 				</a>
