@@ -59,6 +59,9 @@ class Petition(db.Model):
 	timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 	signers = db.relationship('User', secondary=signature, backref='signed_petitions')
+	initial_signatures = 0
+	signature_count = db.Column(db.Integer, default=initial_signatures)
+
 
 	def __repr__(self):
 		return '<Petition %r>' % self.title
