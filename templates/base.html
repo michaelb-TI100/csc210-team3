@@ -29,15 +29,14 @@
 	</head>
 	<body>
 		<!-- Your page content -->
-		<nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-between sticky-top">
-			<div class="container">
-				<ul class="navbar-nav w-50">
+		<nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-around sticky-top">
+				<ul class="navbar-nav ml-aut w-50 justify-content-end">
 					{{ render_nav_item('index', 'Home', use_li=True) }}
 					{{ render_nav_item('create', 'Create Petition', use_li=True) }}
 					{{ render_nav_item('about', 'About', use_li=True) }}
 				</ul>
 				<a href="/" class="navbar-brand mx-auto d-block text-center w-25">UR Heard</a>
-				<ul class="navbar-nav justify-content-end w-50">
+				<ul class="navbar-nav mr-auto w-50">
 					<!--If the user is logged in, show the logout button. Otherwise, show the login and register buttons-->
 					{% if current_user.is_authenticated %}
 						{{ render_nav_item('logout', 'Logout', use_li=True) }}
@@ -46,7 +45,6 @@
 						{{ render_nav_item('register', 'Register', use_li=True) }}
 					{% endif %}
 				</ul>
-			</div>
 		</nav>
 		<div class="container mt-2 px-0">
 			{{ render_messages() }}
