@@ -3,7 +3,11 @@
 {% block title %}UR Heard - About{% endblock title %}
 
 {% block content %}
-	<section class="mx-auto" style="width:max-content">
+	<section class="mx-auto py-2" style="width:max-content">
+		<h2>Background:</h2>
+		<p>Inspired by <a href="https://www.sa.rochester.edu/impact/">SA Impact</a> and <a href="https://www.change.org/petitions">Change.org</a>, team 3 has created a modern petition platform for students.</p>
+	</section>
+	<section class="mx-auto pb-2" style="width:max-content">
 		<h2>Group Members</h2>
 		<ul>
 			<li>Nate Webber</li>
@@ -11,8 +15,21 @@
 			<li>Zeke Brecher</li>
 		</ul>
 	</section>
-	<section class="mx-auto pb-2" style="width:max-content">
-		<h2>Background:</h2>
-		<p>Inspired by <a href="https://www.sa.rochester.edu/impact/">SA Impact</a> and <a href="https://www.change.org/petitions">Change.org</a>, team 3 has created a modern petition platform for students.</p>
-	</section>
+	{# Additional style option for the page #}
+	<div class="card mx-auto" style="width:max-content">
+		<div class="card-body pb-0 mb-0">
+			<h2 class="card-title">Background:</h2>
+			<p class="card-text">Inspired by <a href="https://www.sa.rochester.edu/impact/">SA Impact</a> and <a href="https://www.change.org/petitions">Change.org</a>, team 3 has created a modern petition platform for students.</p>
+		</div>
+		<hr>
+		<div class="card-body pt-0 mt-0">
+			<h2 class="card-title pt-0 mt-0">Group Members:</h2>
+			<ul class="list-group">
+				<li class="list-group-item">Nate Webber</li>
+				<li class="list-group-item">Michael Bashner</li>
+				<li class="list-group-item">Zeke Brecher</li>
+			</ul>
+		</div>
+		
+</div>
 {% endblock content %}
