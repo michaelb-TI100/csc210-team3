@@ -10,7 +10,7 @@
 						<div class="card-header">Generic Side Panel</div>
 						<div class="card-body">
 							<p>(add a cool progress bar or something)</p>
-							<p>Count of signatures: {{signature|length}}</p>
+							<p>Signatures: {{petition.signature_count}} of 250</p>
 							{% if current_user.is_authenticated %}
 							<form method="post">
 								{{ form.csrf_token }}
