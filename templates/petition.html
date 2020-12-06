@@ -12,18 +12,18 @@
 							<p>(add a cool progress bar or something)</p>
 							<p>Signatures: {{petition.signature_count}} of 250</p>
 							{% if current_user.is_authenticated %}
-							<form method="post">
-								{{ form.csrf_token }}
-								{{ form.user_id(value=current_user.id) }}
-								{{ form.petition_id(value=petition.id) }}
-								{% if signed %}
-									{{ form.submit(value="Unsign This Petition!", class_="btn btn-primary") }}
-								{% else %}
-									{{ form.submit(value="Sign This Petition!", class_="btn btn-primary") }}
-								{% endif %}
-							</form>
+								<form method="post">
+									{{ form.csrf_token }}
+									{{ form.user_id(value=current_user.id) }}
+									{{ form.petition_id(value=petition.id) }}
+									{% if signed %}
+										{{ form.submit(value="Unsign This Petition", class_="btn btn-primary text-center") }}
+									{% else %}
+										{{ form.submit(value="Sign This Petition", class_="btn btn-primary text-center") }}
+									{% endif %}
+								</form>
 							{% else %}
-								<a href="/login?next=%2Fpetition%2F{{petition.id}}" class="btn btn-primary">Login to sign this petition!</a>
+								<a href="/login?next=%2Fpetition%2F{{petition.id}}" class="btn btn-primary text-nowrap text-center">Log in to sign this petition</a>
 							{% endif %}
 						</div>
 					</div>
