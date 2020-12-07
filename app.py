@@ -79,11 +79,21 @@ def logout():
 def register():
 	form = registerForm()
 	if form.validate_on_submit():
+		#i think this should appropriately generate usernames
 		email = form.email.data
-
+		split_email = email.split('@')
+		#debug
+		print(split_email)
+		username = split_email[0]
+		#debug
+		print(username)
+		user = User(email = email, name = username, password = form.password.data)
+		db.session.add(user)
+		db.session.commit()
+		flash('You can now login')
+		return redirect(url_for('login'))
 	return render_template('register.html', form=form)
-
-
+	
 #create and submit a petition. requires the user to be logged in
 @app.route('/create', methods=['GET', 'POST'])
 @login_required

@@ -14,7 +14,6 @@ class loginForm(FlaskForm):
     remember_me = BooleanField('Keep me logged in')
     submit = SubmitField('Log In')
 
-
 #emails will be verified as coming from the rochester.edu domain in app.py
 class registerForm(FlaskForm):
     email = EmailField('Email Address', validators=[DataRequired()])
@@ -26,9 +25,8 @@ class registerForm(FlaskForm):
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('Email already registered')
-    	elif "rochester.edu" not in field.data:
-			raise ValidationError('Email must be from rochester.edu domain')
-
+        if "rochester.edu" not in (field.data):
+        	raise ValidationError('Email must be from rochester.edu domain')
 
 #form for submitting new petitions
 class petitionForm(FlaskForm):
