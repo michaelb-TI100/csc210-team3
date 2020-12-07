@@ -47,16 +47,11 @@ def index():
 
 
 #this is pretty heavily based on the implementation in the textbook
-#there are a few debug print statements that could be cleaned up later
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	form = loginForm()
 	if form.validate_on_submit():
-		#debug
-		print('Login form submitted!')
 		user = User.query.filter_by(email=form.email.data).first()
-		#debug
-		print(user.name)
 		#if user exists and the password is correct
 		if user is not None and user.verify_password(form.password.data):
 			#debug
@@ -66,10 +61,7 @@ def login():
 			if next is None or not next.startswith('/'):
 				next = url_for('index')
 			return redirect(next)
-		#TODO flashing messages doesn't work quite right and I'm not sure why
 		flash('Invalid username or password.')
-	#debug
-	print('Login form not received!')
 	return render_template('login.html', form=form)
 
 
@@ -82,16 +74,14 @@ def logout():
 	return redirect(url_for('index'))
 
 
-#TODO this doesn't work yet
+#register a new user
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 	form = registerForm()
-	email = None
-	password = None
 	if form.validate_on_submit():
 		email = form.email.data
-		password = form.password.data
-	return render_template('register.html', form=form, email=email, password=password)
+
+	return render_template('register.html', form=form)
 
 
 #create and submit a petition. requires the user to be logged in
@@ -116,14 +106,6 @@ def create():
 		except:
 			return 'There was an error adding your new petition!'
 	return render_template('create.html', form=form)
-
-
-#this page is just for testing if login can be effectively verified
-#it should be deleted later
-@app.route('/secret', methods=['GET', 'POST'])
-@login_required
-def secret():
-	return "Only authenticated users are allowed, and you're in!"
 
 
 #dynamically generated page for a given petition
