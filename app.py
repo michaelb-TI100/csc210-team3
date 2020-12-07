@@ -93,7 +93,7 @@ def register():
 		flash('You can now login')
 		return redirect(url_for('login'))
 	return render_template('register.html', form=form)
-	
+
 #create and submit a petition. requires the user to be logged in
 @app.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -154,12 +154,10 @@ def petition(id):
 	else:
 		return render_template('petition.html', petition=petition, signature=signature, form=form)
 
-
 #about page
 @app.route('/about')
 def about():
 	return render_template('about.html')
-
 
 #user loader utility for the login manager
 @login_manager.user_loader

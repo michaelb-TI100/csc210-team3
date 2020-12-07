@@ -15,7 +15,7 @@
 				{{ bootstrap.load_css() }}
 				<style>
 					body {
-						background-image: url("{{ url_for('static', filename='images/background2.png') }}");
+						background-image: url("{{ url_for('static', filename='images/background.png') }}");
 						background-size: 500px 500px;
 						background-repeat: repeat;
 						background-position: center;
@@ -23,6 +23,15 @@
 					}
 					.active {
 						text-shadow: yellow 0 0 10px;
+					}
+					#shadow {
+						height: 100vh;
+						display: flex;
+     				flex-direction: column;
+						border-left-color: #929292;
+						border-left-style: solid;
+						border-right-color: #929292;
+						border-right-style: solid;
 					}
 				</style>
 			{% endblock styles %}
@@ -42,6 +51,7 @@
 				<ul class="navbar-nav mr-auto w-50 justify-content-end">
 					<!--If the user is logged in, show the logout button. Otherwise, show the login and register buttons-->
 					{% if current_user.is_authenticated %}
+						<li class="navbar-brand"> Hello, {{ current_user.name }}</li>
 						{{ render_nav_item('logout', 'Logout', use_li=True) }}
 					{% else %}
 						{{ render_nav_item('login', 'Login', use_li=True) }}
@@ -53,9 +63,9 @@
 		<div class="container  px-0">
 			{{ render_messages() }}
 		</div>
-		<div class="container bg-light">
+		<div class="container bg-light" id="shadow">
 			<header class="page-header">
-				<h1 class="text-center pt-3">CSC 210 - Group 3 - URHeard</h1> <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
+				{# <h1 class="text-center pt-3">CSC 210 - Group 3 - URHeard</h1> #} <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
 			</header>
 			{% block content %}{% endblock content %}
 		</div>
