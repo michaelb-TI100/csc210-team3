@@ -25,13 +25,19 @@
 						text-shadow: yellow 0 0 10px;
 					}
 					#shadow {
-						height: 100vh;
+						height: 95vh;
 						display: flex;
      				flex-direction: column;
-						border-left-color: #929292;
-						border-left-style: solid;
+						margin-top: -3px;
+						border-color: #929292;
+						border-style: solid;
+						border-top-color: #929292;
+						border-top-style: solid;
 						border-right-color: #929292;
 						border-right-style: solid;
+					}
+					#content {
+						margin-top: 45px;
 					}
 				</style>
 			{% endblock styles %}
@@ -64,10 +70,12 @@
 			{{ render_messages() }}
 		</div>
 		<div class="container bg-light" id="shadow">
+			<div class="container bg-light" id="content">
 			<header class="page-header">
 				{# <h1 class="text-center pt-3">CSC 210 - Group 3 - URHeard</h1> #} <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
 			</header>
 			{% block content %}{% endblock content %}
+			</div>
 		</div>
 		{% block scripts %}
 			<!-- Optional JavaScript -->
