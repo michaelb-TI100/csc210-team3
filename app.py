@@ -174,7 +174,7 @@ def passwordchange():
 			current_user.password = form.new_password.data
 			db.session.commit()
 			flash("You have successfully changed your password.")
-			return redirect(url_for('profile'))
+			return redirect(url_for('profile', id=current_user.id))
 		flash("Invalid password.")
 	return render_template('passwordchange.html', form = form)
 
