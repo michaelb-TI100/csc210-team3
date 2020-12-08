@@ -29,6 +29,13 @@ class registerForm(FlaskForm):
         if "rochester.edu" not in (field.data):
         	raise ValidationError('Email must be from rochester.edu domain')
 
+#form for changing one's password
+class passwordChangeForm(FlaskForm):
+    current_password = PasswordField('Current Password', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[DataRequired(), EqualTo('new_password2', message='Passwords must match.')])
+    new_password2 = PasswordField('Confirm New Password', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
 #form for submitting new petitions
 class petitionForm(FlaskForm):
     title = StringField('Petition Title (Limit 80 Characters)', validators=[DataRequired()])

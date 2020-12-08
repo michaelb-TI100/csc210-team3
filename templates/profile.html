@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}UR Heard - current_user.name {% endblock title %}
+{% block title %}UR Heard - {{ current_user.name }} {% endblock title %}
 
 {% block content %}
+
+<a href="{{ url_for ('passwordchange') }}" class="text-body text-decoration-none">Change Password</a>
 
 {% endblock content %}
