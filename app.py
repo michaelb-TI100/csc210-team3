@@ -55,7 +55,7 @@ def login():
 		#if user exists and the password is correct
 		if user is not None and user.verify_password(form.password.data):
 			#debug
-			print('Login form validated successfully!')
+			# print('Login form validated successfully!')
 			login_user(user, form.remember_me.data) #if the second argument is true, user will be remembered
 			next = request.args.get('next')
 			if next is None or not next.startswith('/'):
@@ -139,10 +139,10 @@ def petition(id):
 				# print(len(petition.signature_count))
 				db.session.add(petition)
 				db.session.commit()
-				return redirect(url_for('petition',id=id))
+				return redirect(url_for('petition', id=id))
 			except:
 				flash("An issue occurred with the signature feature.")
-				return redirect(url_for('petition',id=id))
+				return redirect(url_for('petition', id=id))
 		if signed:
 			print('Exists')
 			return render_template('petition.html', petition=petition, signature=signature, form=form, signed=True)
@@ -176,7 +176,7 @@ def passwordchange():
 			flash("You have successfully changed your password.")
 			return redirect(url_for('profile', id=current_user.id))
 		flash("Invalid password.")
-	return render_template('passwordchange.html', form = form)
+	return render_template('passwordchange.html', form=form)
 
 
 #user loader utility for the login manager
