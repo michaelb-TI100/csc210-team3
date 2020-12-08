@@ -25,7 +25,7 @@
 						text-decoration: overline;
 					}
 					#shadow {
-						height: 95vh;
+						height: 100vp;
 						display: flex;
      				flex-direction: column;
 						margin-top: -3px;
@@ -37,7 +37,7 @@
 						border-right-style: solid;
 					}
 					#content {
-						margin-top: 45px;
+						margin-top: 25px;
 					}
 				</style>
 			{% endblock styles %}
@@ -57,7 +57,7 @@
 				<ul class="navbar-nav mr-auto w-50 justify-content-end">
 					<!--If the user is logged in, show the logout button. Otherwise, show the login and register buttons-->
 					{% if current_user.is_authenticated %}
-						{{ render_nav_item('profile', current_user.name, use_li=True, id=current_user.id) }} 
+						{{ render_nav_item('profile', current_user.name, use_li=True, id=current_user.id) }}
 						{{ render_nav_item('logout', 'Logout', use_li=True) }}
 					{% else %}
 						{{ render_nav_item('login', 'Login', use_li=True) }}
@@ -71,10 +71,8 @@
 		</div>
 		<div class="container bg-light" id="shadow">
 			<div class="container bg-light" id="content">
-			<header class="page-header">
-				{# <h1 class="text-center pt-3">CSC 210 - Group 3 - URHeard</h1> #} <!--We should probably pick how exactly we want to stylize/capitalize the name of the project-->
-			</header>
-			{% block content %}{% endblock content %}
+			{% block content %}
+			{% endblock content %}
 			</div>
 		</div>
 		{% block scripts %}

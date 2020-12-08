@@ -5,9 +5,8 @@
 	<article class="container">
 		<div class="row py-3">
 			<div class="col-3 order-2" id="side-panel">
-				<div class="sticky-top">
+				<div class="sticky-top" style="padding-top:33%;">
 					<div class="card bg-light mb-3" style="max-width: 18rem;">
-						{# <div class="card-header">Generic Side Panel</div> #}
 						<div class="card-body">
 							<p class="text-center mb-0">Signatures:</p>
 							<p class="text-center my-0 pt-0">{{petition.signature_count}}/250</p>
@@ -39,12 +38,11 @@
 						<h4 class="card-subtitle">Created {{moment(petition.timestamp).fromNow()}} by <a href="/profile/{{petition.author_id}}">{{petition.author.name}}</a></h4>
 					</heading>
 					<div class="card-body">
-						<p style="white-space: pre-wrap;">{{petition.body}}</p>
+						<p style="white-space:pre-wrap;">{{petition.body}}</p>
 					</div>
 				</div>
 			</div>
 		</div>
-	</article>
 	{# <div class="d-flex flex-wrap">
 		<article class="card m-2">
 			<div class="card-body">
