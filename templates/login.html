@@ -3,6 +3,19 @@
 {% block title %} UR Heard - Login {% endblock title %}
 
 {% block content %}
+	<script>
+		window.addEventListener("load", function(){
+    	var checkbox = document.getElementById('toggle');
+    	var x = document.getElementById('password');
+    	checkbox.addEventListener('change', function() {
+        if(this.checked) {
+            x.type = 'text';
+        } else {
+            x.type = 'password';
+        }
+    	});
+		});
+	</script>
 	<header class="page-header">
 		<h1 style="text-align:center">Login</h1>
 	</header>

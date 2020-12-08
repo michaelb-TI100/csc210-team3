@@ -5,12 +5,13 @@ from wtforms.fields.html5 import EmailField
 from app import db
 from models import *
 
-#document defines the various forms we will use 
+#document defines the various forms we will use
 
-#I think it may be easier to just use emails instead of custom usernames. 
+#I think it may be easier to just use emails instead of custom usernames.
 class loginForm(FlaskForm):
     email = EmailField('Email Address', validators=[DataRequired()])
-    password = StringField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()], id='password')
+    show_password = BooleanField('Show Password', id='toggle')
     remember_me = BooleanField('Keep me logged in')
     submit = SubmitField('Log In')
 
