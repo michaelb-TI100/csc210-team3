@@ -13,7 +13,6 @@ from models import *
 class loginForm(FlaskForm):
     email = EmailField('Email Address', validators=[DataRequired()], widget=EmailInput())
     password = PasswordField('Password', validators=[DataRequired()], id='password', widget=PasswordInput())
-    show_password = BooleanField('Show Password', id='toggle', widget=CheckboxInput())
     remember_me = BooleanField('Keep Me Logged In', widget=CheckboxInput())
     submit = SubmitField('Log In', widget=SubmitInput())
 
@@ -23,7 +22,7 @@ class registerForm(FlaskForm):
     email = EmailField('Email Address', validators=[DataRequired()], widget=EmailInput())
     password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', message='Passwords must match.')])
     password2 = PasswordField('Confirm Password', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Register')
 
     #custom email validator, does not have to be manually added to the email line
     def validate_email(self, field):
