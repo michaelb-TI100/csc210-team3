@@ -159,8 +159,8 @@ def petition(id):
 def about():
 	return render_template('about.html')
 
-@app.route('/profile')
-def profile():
+@app.route('/profile/<int:id>')
+def profile(id):
 	return render_template('profile.html')
 
 #user loader utility for the login manager
