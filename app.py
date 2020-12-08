@@ -161,7 +161,8 @@ def about():
 
 @app.route('/profile/<int:id>')
 def profile(id):
-	return render_template('profile.html')
+	current_profile = User.query.get_or_404(id)
+	return render_template('profile.html', current_profile=current_profile)
 
 #user loader utility for the login manager
 @login_manager.user_loader
