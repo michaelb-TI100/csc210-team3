@@ -6,15 +6,41 @@
 	<header class="page-header">
 		<h1 class="text-center">Login</h1>
 	</header>
-	{{ wtf.render_form(form) }}
-	{# <a href="" class="btn btn-danger btn-sm">Return</a> #}
+	{# {{ wtf.render_form(form, extra_classes="container mx-auto w-50") }} #}
+	<form class="form cheese container mx-auto w-50" method="post" role="form">
+		{{ form.hidden_tag() }}
+		<div class="form-group required">
+			{{form.email.label(class="form-control-label")}}
+			{{form.email(class="form-control")}}
+		</div>
+		<div class="form-group required">
+			{{form.password.label(class="form-control-label")}}
+			<div class="input-group">
+				{{form.password(class="form-control")}}
+				<div class="input-group-append">
+					<button id="passwordToggle" type="button" class="btn btn-secondary">Show Password</button>
+				</div>
+			</div>
+		</div>
+		<div class="form-check">
+			{{form.remember_me(class="form-check-input")}}
+			{{form.remember_me.label(class="form-check-label")}} 
+		</div>
+		{{form.submit(class="btn btn-primary")}}
+		{{wtf.render_field(form.submit)}}
+		show_password
+		remember_me
+		submit
+	</form>
+
+	<!--<a href=class="btn btn-danger btn-sm">Return</a>-->
 
 {% endblock content %}
 
 {% block scripts %}
 	{{super()}}
 	<script>
-		window.addEventListener("load", function(){
+		$(window).on("load", function(){
 			var checkbox = document.getElementById('toggle');
 			var x = document.getElementById('password');
 			checkbox.addEventListener('change', function() {
@@ -25,5 +51,27 @@
 				}
 			});
 		});
+		$("#toggle").change( function() {
+			$("label[for='toggle']").text($("label[for='toggle']").text() == "Show Password" ? "Hide Password" : "Show Password");
+
+		});
+
+		$("#passwordToggle").click( function() {
+			$(this).text($(this).text() == "Show Password" ? "Hide Password" : "Show Password");
+			$("#password").attr("type", $("#password").attr("type") == "password" ? "text" : "password");
+			
+		});
+		function showPassword() {
+			// alert("Yo")
+			// $('cheese').innerHTML = "Help me";
+			if($('#password').attr("type")=='password'){
+				$('#passwordToggle').text("Show Password");
+			} else {
+				$('#passwordToggle').text("Hide Password");
+			}
+			$('.cheese').css("color", "red");
+			$('#passwordToggle').text("Hide Password");
+
+		}
 	</script>
 {% endblock scripts%}
