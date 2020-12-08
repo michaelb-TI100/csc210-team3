@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
 
-{% block title %}UR Heard - {{ current_profile.name}}'s Profile{% endblock title %}
+{% block title %}UR Heard - {{ current_user.name}}'s Profile{% endblock title %}
 
 {% block content %}
 
     <a href="{{ url_for ('passwordchange') }}" class="text-body text-decoration-none">Change Password</a>
 
-	{{current_profile.signed_petitions}}
 	<h2>Signed Petitions:</h2>
 	<ul>
-		{% for petition in current_profile.signed_petitions %}
+		{% for petition in current_user.signed_petitions %}
 			<li>
 				<a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a>
 			</li>
