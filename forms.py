@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, HiddenField, PasswordField, ValidationError
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.validators import DataRequired, Email, EqualTo, Length
 from wtforms.fields.html5 import EmailField
+from wtforms.widgets import PasswordInput, CheckboxInput, SubmitInput
+from wtforms.widgets.html5 import EmailInput
 from app import db
 from models import *
 
@@ -9,15 +11,16 @@ from models import *
 
 #I think it may be easier to just use emails instead of custom usernames.
 class loginForm(FlaskForm):
-    email = EmailField('Email Address', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()], id='password')
-    show_password = BooleanField('Show Password', id='toggle')
-    remember_me = BooleanField('Keep Me Logged In')
-    submit = SubmitField('Log In')
+    email = EmailField('Email Address', validators=[DataRequired()], widget=EmailInput())
+    password = PasswordField('Password', validators=[DataRequired()], id='password', widget=PasswordInput())
+    show_password = BooleanField('Show Password', id='toggle', widget=CheckboxInput())
+    remember_me = BooleanField('Keep Me Logged In', widget=CheckboxInput())
+    submit = SubmitField('Log In', widget=SubmitInput())
+
 
 #emails will be verified as coming from the rochester.edu domain in app.py
 class registerForm(FlaskForm):
-    email = EmailField('Email Address', validators=[DataRequired()])
+    email = EmailField('Email Address', validators=[DataRequired()], widget=EmailInput())
     password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', message='Passwords must match.')])
     password2 = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
@@ -29,6 +32,7 @@ class registerForm(FlaskForm):
         if "rochester.edu" not in (field.data):
         	raise ValidationError('Email must be from rochester.edu domain')
 
+
 #form for changing one's password
 class passwordChangeForm(FlaskForm):
     current_password = PasswordField('Current Password', validators=[DataRequired()])
@@ -36,9 +40,10 @@ class passwordChangeForm(FlaskForm):
     new_password2 = PasswordField('Confirm New Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+
 #form for submitting new petitions
 class petitionForm(FlaskForm):
-    title = StringField('Petition Title (Limit 80 Characters)', validators=[DataRequired()])
+    title = StringField('Petition Title (Limit 80 Characters)', validators=[DataRequired(), Length(max=80, message="Title cannot be longer than 80 characters.")])
     body = TextAreaField('Body text', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
