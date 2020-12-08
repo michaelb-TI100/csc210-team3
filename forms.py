@@ -12,7 +12,7 @@ class loginForm(FlaskForm):
     email = EmailField('Email Address', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()], id='password')
     show_password = BooleanField('Show Password', id='toggle')
-    remember_me = BooleanField('Keep me logged in')
+    remember_me = BooleanField('Keep Me Logged In')
     submit = SubmitField('Log In')
 
 #emails will be verified as coming from the rochester.edu domain in app.py
