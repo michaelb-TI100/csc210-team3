@@ -156,6 +156,7 @@ def about():
 	return render_template('about.html')
 
 @app.route('/profile')
+@login_required
 def profile():
 	return render_template('profile.html')
 
