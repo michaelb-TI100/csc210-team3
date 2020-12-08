@@ -3,22 +3,33 @@
 {% block title %}UR Heard - {{ current_profile.name}}'s Profile{% endblock title %}
 
 {% block content %}
-	<h1>{{ current_profile.name}}'s Profile</h1>
-	<h2>Authored Petitions:</h2>
-	<ul>
+<header class="page header">
+  	<h1 style="text-align:center;">{{ current_profile.name}}'s Profile</h1>
+</header>
+<div class="row" style="margin-left: 16.5%; margin-right: auto; margin-top: 3%;">
+  <div class="column" style="float: left; width: 50%; padding: 5px;">
+  <table>
+    <tr>
+      <h2>Authored Petitions</h2>
+    </tr>
 		{% for petition in current_profile.petition|reverse %}
-			<li><a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a></li>
+			<tr><td><a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a></td></tr>
 		{% endfor %}
-	</ul>
-	<h2>Signed Petitions:</h2>
-	<ul>
+  </table>
+  </div>
+  <div class="column" style="float: left; width: 50%; padding: 5px;">
+  <table>
+   <tr>
+    <h2>Signed Petitions</h2>
+	</tr>
 		{% for petition in current_profile.signed_petitions|reverse %}
-			<li><a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a></li>
+			<tr><td><a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a></td></tr>
 		{% endfor %}
-	</ul>
-
+  </table>
+  </div>
+</div>
 	{% if current_profile.id == current_user.id%}
-		<h2>Options:</h2>
+		<h2>Options</h2>
 		<a href="{{ url_for('passwordchange')}}">Change Password</a>
 	{% endif %}
 {% endblock content %}
