@@ -164,6 +164,21 @@ def profile(id):
 	current_profile = User.query.get_or_404(id)
 	return render_template('profile.html', current_profile=current_profile)
 
+
+@app.route('/profile/passwordchange', methods=['GET', 'POST'])
+@login_required
+def passwordchange():
+	form = passwordChangeForm()
+	if form.validate_on_submit():
+		#if something doesn't work it's probably this line
+		if current_user.verify_password(form.current_password.data):
+			current_user.password = form.new_password.data
+			db.session.commit()
+			flash("You have successfully changed your password.")
+			return redirect(url_for('profile'))
+		flash("Invalid password.")
+	return render_template('passwordchange.html', form = form)
+
 #user loader utility for the login manager
 @login_manager.user_loader
 def load_user(user_id):
