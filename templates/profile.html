@@ -16,4 +16,9 @@
 			<li><a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a></li>
 		{% endfor %}
 	</ul>
+
+	{% if current_profile.id == current_user.id%}
+		<h2>Options:</h2>
+		<a href="{{ url_for('passwordchange')}}">Change Password</a>
+	{% endif %}
 {% endblock content %}
