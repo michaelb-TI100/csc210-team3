@@ -3,15 +3,17 @@
 {% block title %}UR Heard - {{ current_profile.name}}'s Profile{% endblock title %}
 
 {% block content %}
-
-	{{current_profile.signed_petitions}}
-	<h2>Signed Petitions:</h2>
+	<h1>{{ current_profile.name}}'s Profile</h1>
+	<h2>Authored Petitions:</h2>
 	<ul>
-		{% for petition in current_profile.signed_petitions %}
-			<li>
-				<a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a>
-			</li>
+		{% for petition in current_profile.petition|reverse %}
+			<li><a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a></li>
 		{% endfor %}
 	</ul>
-
+	<h2>Signed Petitions:</h2>
+	<ul>
+		{% for petition in current_profile.signed_petitions|reverse %}
+			<li><a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a></li>
+		{% endfor %}
+	</ul>
 {% endblock content %}
