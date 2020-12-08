@@ -155,11 +155,9 @@ def petition(id):
 def about():
 	return render_template('about.html')
 
-#profile page
-@app.route('/profile', methods=['GET', 'POST'])
-@login_required
+@app.route('/profile/<int:id>')
 def profile():
-	return render_template('profile.html')
+	return render_template('profile.html', current_profile=current_user)
 
 @app.route('/profile/passwordchange', methods=['GET', 'POST'])
 @login_required
