@@ -57,7 +57,7 @@
 				<ul class="navbar-nav mr-auto w-50 justify-content-end">
 					<!--If the user is logged in, show the logout button. Otherwise, show the login and register buttons-->
 					{% if current_user.is_authenticated %}
-						<li class="navbar-brand"> Hello, {{ current_user.name }}</li>
+						{{ render_nav_item('profile', current_user.name, use_li=true) }} 
 						{{ render_nav_item('logout', 'Logout', use_li=True) }}
 					{% else %}
 						{{ render_nav_item('login', 'Login', use_li=True) }}
