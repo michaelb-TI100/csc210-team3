@@ -82,15 +82,11 @@ def register():
 		#i think this should appropriately generate usernames
 		email = form.email.data
 		split_email = email.split('@')
-		#debug
-		print(split_email)
 		username = split_email[0]
-		#debug
-		print(username)
 		user = User(email = email, name = username, password = form.password.data)
 		db.session.add(user)
 		db.session.commit()
-		flash('You can now login')
+		flash('Thank you for registering an account! You can now login.')
 		return redirect(url_for('login'))
 	return render_template('register.html', form=form)
 
@@ -155,14 +151,28 @@ def petition(id):
 		return render_template('petition.html', petition=petition, signature=signature, form=form)
 
 #about page
-@app.route('/about')
+@app.route('/about', methods=['GET', 'POST'])
 def about():
 	return render_template('about.html')
 
-@app.route('/profile/<int:id>')
-def profile(id):
-	current_profile = User.query.get_or_404(id)
-	return render_template('profile.html', current_profile=current_profile)
+@app.route('/profile')
+@login_required
+def profile():
+	return render_template('profile.html')
+
+@app.route('/profile/passwordchange', methods=['GET', 'POST'])
+@login_required
+def passwordchange():
+	form = passwordChangeForm()
+	if form.validate_on_submit():
+		#if something doesn't work it's probably this line
+		if current_user.verify_password(form.current_password.data):
+			current_user.password = form.new_password.data
+			db.session.commit()
+			flash("You have successfully changed your password.")
+			return redirect(url_for('profile'))
+		flash("Invalid password.")
+	return render_template('passwordchange.html', form = form)
 
 
 @app.route('/profile/passwordchange', methods=['GET', 'POST'])
