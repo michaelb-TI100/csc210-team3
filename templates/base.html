@@ -49,7 +49,7 @@
 					{{ render_nav_item('create', 'Create Petition', use_li=True) }}
 					{{ render_nav_item('about', 'About', use_li=True) }}
 				</ul>
-				<a href="/" class="navbar-brand mx-auto d-block text-center w-25">UR Heard</a>
+				<a href="{{ url_for('index') }}" class="navbar-brand mx-auto d-block text-center w-25">UR Heard</a>
 				<ul class="navbar-nav mr-auto w-50 justify-content-end">
 					<!--If the user is logged in, show the logout button. Otherwise, show the login and register buttons-->
 					{% if current_user.is_authenticated %}
