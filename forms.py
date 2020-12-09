@@ -19,7 +19,7 @@ class loginForm(FlaskForm):
 
 #emails will be verified as coming from the rochester.edu domain in app.py
 class registerForm(FlaskForm):
-    email = EmailField('Email Address', validators=[DataRequired()], widget=EmailInput())
+    email = EmailField('Email Address (Must be from rochester.edu domain)', validators=[DataRequired()], widget=EmailInput())
     password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', message='Passwords must match.')], widget=PasswordInput())
     password2 = PasswordField('Confirm Password', validators=[DataRequired()], widget=PasswordInput())
     submit = SubmitField('Register')
