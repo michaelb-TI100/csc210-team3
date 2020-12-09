@@ -46,6 +46,10 @@ class petitionForm(FlaskForm):
     body = TextAreaField('Body text', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+#form for deleting a petition
+#i'm not sure if there's a better way to do this than creating a form like this?
+class petitionDeleteForm(FlaskForm):
+    submit = SubmitField('Delete Petition')
 
 class signatureForm(FlaskForm):
 	user_id=HiddenField("user_id")

@@ -28,7 +28,7 @@
 								<a href="/login?next=%2Fpetition%2F{{petition.id}}" class="btn btn-primary text-wrap w-100" style="max-width:100%">Login To Sign This Petition</a>
 							{% endif %}
 							{% if petition.author == current_user %}
-								<a href="/petition/{{petition.id}}/delete">Delete this petition</a>
+								<a href="/petition/{{petition.id}}/delete" type="button" class="btn btn-danger">Delete This Petition</a>
 							{% endif %}
 						</div>
 					</div>
