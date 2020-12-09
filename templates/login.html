@@ -30,7 +30,7 @@
 		</div>
 		<div class="mb-3">
 			<div class="d-flex justify-content-between" role="group">
-				<a type="button" class="btn btn-outline-danger" href="/">Cancel</a>
+				<a type="button" class="btn btn-outline-danger" href="{{ url_for('index') }}">Cancel</a>
 				{{wtf.render_field(form.submit)}}
 			</div>
 		</div>
