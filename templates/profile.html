@@ -9,7 +9,7 @@
 	<div class="row w-50 mx-auto">
 		<div class="column w-50">
 			<div class="card">
-				<h2 class="card-header">Authored Petitions:</h2>
+				<h3 class="card-header">Authored Petitions:</h3>
 				<ul class="list-group list-group-flush">
 					{% for petition in current_profile.petition|reverse %}
 						<li class="list-group-item"><a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a></li>
