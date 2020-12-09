@@ -5,7 +5,7 @@
 	<article class="container">
 		<div class="row py-3">
 			<div class="col-3 order-2" id="side-panel">
-				<div class="sticky-top" style="padding-top:33%;">
+				<div class="sticky-top">
 					<div class="card bg-light mb-3" style="max-width: 18rem;">
 						<div class="card-body">
 							<p class="text-center mb-0">Signatures:</p>
@@ -25,14 +25,22 @@
 									{% endif %}
 								</form>
 							{% else %}
-								<a href="/login?next=%2Fpetition%2F{{petition.id}}" class="btn btn-primary text-wrap w-100" style="max-width:100%">Login To Sign This Petition</a>
+								<a href="/login?next=%2Fpetition%2F{{petition.id}}" class="btn btn-primary text-wrap w-100">Login To Sign This Petition</a>
 							{% endif %}
 						</div>
 					</div>
 				</div>
+				{% if current_user.is_authenticated and petition.author == current_user %}
+					<div class="card bg-light mb-3" style="max-width: 18rem;">
+						<div class="card-body">
+							<h4 class="text-center">Petition Management:</h4>
+							<a href="/petition/{{petition.id}}/delete" type="button" class="btn btn-danger w-100">Delete This Petition</a>
+						</div>
+					</div>
+				{% endif %}
 			</div>
 			<div class="col" id="main">
-				<div class="card bg-light mb3" style="max-width: 100rem;">
+				<div class="card bg-light mb-3">
 					<heading class="card-header">
 						<h3 class="card-title font-weight-bold">{{petition.title}}</h3>
 						<h4 class="card-subtitle">Created {{moment(petition.timestamp).fromNow()}} by <a href="/profile/{{petition.author_id}}">{{petition.author.name}}</a></h4>
@@ -43,13 +51,10 @@
 				</div>
 			</div>
 		</div>
-	{# <div class="d-flex flex-wrap">
-		<article class="card m-2">
-			<div class="card-body">
-				<h3 class="card-title"> petiton title </h3>
-				<h4 class="card-subtitle mb-2 text-muted"> by <span class="card-link"> author name </span></h4>
-				<p class="card-text text-truncate"> contents of petiton </p>
-			</div>
-		</article>
-	</div> #}
 {% endblock content %}
+
+{% block scripts %}
+	{{super()}}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>
+	{{ moment.include_moment(no_js=True) }}
+{% endblock scripts %}

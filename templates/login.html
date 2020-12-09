@@ -9,28 +9,31 @@
 	{# {{ wtf.render_form(form, extra_classes="container mx-auto w-50") }} #}
 	<form class="form container mx-auto w-50" method="post" role="form">
 		{{ form.hidden_tag() }}
-		<div class="form-group required">
-			{{form.email.label(class="form-control-label")}}
+		<div class="mb-3 required">
+			{{form.email.label(class="form-label")}}
 			{{form.email(class="form-control")}}
 		</div>
-		<div class="form-group required">
-			{{form.password.label(class="form-control-label")}}
+		<div class="mb-3 required">
+			{{form.password.label(class="form-label")}}
 			<div class="input-group">
 				{{form.password(class="form-control")}}
 				<div class="input-group-append">
-					<button id="passwordToggle" type="button" class="btn btn-secondary">Show Password</button>
+					<button id="passwordToggle" type="button" class="btn btn-outline-dark">Show Password</button>
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="mb-3">
 			<div class="form-check">
 				{{form.remember_me(class="form-check-input")}}
 				{{form.remember_me.label(class="form-check-label")}} 
 			</div>
 		</div>
-		<div class="form-group required">
-		{{wtf.render_field(form.submit)}}
-	</div>
+		<div class="mb-3">
+			<div class="d-flex justify-content-between" role="group">
+				<a type="button" class="btn btn-outline-danger" href="/">Cancel</a>
+				{{wtf.render_field(form.submit)}}
+			</div>
+		</div>
 	</form>
 
 	<!--<a href=class="btn btn-danger btn-sm">Return</a>-->
