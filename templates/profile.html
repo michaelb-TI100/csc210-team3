@@ -9,7 +9,7 @@
 	<div class="row w-50 mx-auto">
 		<div class="column w-50">
 			<div class="card">
-				<h3 class="card-header">Authored Petitions:</h3>
+				<h3 class="card-header text-center">Authored Petitions:</h3>
 				<ul class="list-group list-group-flush">
 					{% for petition in current_profile.petition|reverse %}
 						<li class="list-group-item"><a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a></li>
@@ -19,7 +19,7 @@
 		</div>
 		<div class="column w-50">
 			<div class="card">
-				<h3 class="card-header">Signed Petitions:</h3>
+				<h3 class="card-header text-center">Signed Petitions:</h3>
 				<ul class="list-group list-group-flush">
 					{% for petition in current_profile.signed_petitions|reverse %}
 						<li class="list-group-item"><a href="{{ url_for ('petition', id=petition.id) }}">{{petition.title}}</a></li>
@@ -29,7 +29,11 @@
 		</div>
 	</div>
 	{% if current_profile.id == current_user.id%}
-		<h2>Options</h2>
-		<a href="{{ url_for('passwordchange')}}">Change Password</a>
+		<div class="container mx-auto mt-3 w-25">
+			<div class="card">
+				<h3 class="card-header text-center">User Options:</h3>
+				<a href="{{ url_for('passwordchange')}}" class="btn btn-warning">Change Password</a>
+			</div>
+		</div>
 	{% endif %}
 {% endblock content %}
