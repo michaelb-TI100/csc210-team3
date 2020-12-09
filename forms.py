@@ -20,8 +20,8 @@ class loginForm(FlaskForm):
 #emails will be verified as coming from the rochester.edu domain in app.py
 class registerForm(FlaskForm):
     email = EmailField('Email Address', validators=[DataRequired()], widget=EmailInput())
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', message='Passwords must match.')])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', message='Passwords must match.')], widget=PasswordInput())
+    password2 = PasswordField('Confirm Password', validators=[DataRequired()], widget=PasswordInput())
     submit = SubmitField('Register')
 
     #custom email validator, does not have to be manually added to the email line
@@ -35,8 +35,8 @@ class registerForm(FlaskForm):
 #form for changing one's password
 class passwordChangeForm(FlaskForm):
     current_password = PasswordField('Current Password', validators=[DataRequired()])
-    new_password = PasswordField('New Password', validators=[DataRequired(), EqualTo('new_password2', message='Passwords must match.')])
-    new_password2 = PasswordField('Confirm New Password', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[DataRequired(), EqualTo('new_password2', message='Passwords must match.')], widget=PasswordInput())
+    new_password2 = PasswordField('Confirm New Password', validators=[DataRequired()], widget=PasswordInput())
     submit = SubmitField('Submit')
 
 
