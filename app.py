@@ -88,6 +88,8 @@ def register():
 		db.session.commit()
 		flash('Thank you for registering an account! You can now login.')
 		return redirect(url_for('login'))
+	else:
+		flash_errors(form)
 	return render_template('register.html', form=form)
 
 
@@ -195,6 +197,8 @@ def passwordchange():
 			flash("You have successfully changed your password.")
 			return redirect(url_for('profile', id=current_user.id))
 		flash("Invalid password.")
+	else:
+		flash_errors(form)
 	return render_template('passwordchange.html', form=form)
 
 
@@ -202,3 +206,10 @@ def passwordchange():
 @login_manager.user_loader
 def load_user(user_id):
 	return User.query.get(int(user_id))
+
+#error flash method to get around the problem
+#this feels stupid but it works
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"%s" % (error), 'error')
