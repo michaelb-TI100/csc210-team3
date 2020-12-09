@@ -152,6 +152,18 @@ def petition(id):
 		return render_template('petition.html', petition=petition, signature=signature, form=form)
 
 
+@app.route('/petition/<int:id>/delete', methods=['GET', 'POST'])
+def petition_delete(id):
+	petition = Petition.query.get_or_404(id)
+	author = User.query.get_or_404(petition.author_id)
+	if current_user.is_authenticated and author == current_user:
+		return render_template('petitiondelete.html', petition=petition)
+	else:
+		flash('You cannot delete this petition!')
+		return redirect(url_for('petition', id=id))
+
+
+
 #about page
 @app.route('/about', methods=['GET', 'POST'])
 def about():
